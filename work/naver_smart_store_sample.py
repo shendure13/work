@@ -11,6 +11,9 @@ import numpy as np
 import utility_work
 import re
 
+# 판매상품 50개 이하 / 카테고리 : 생활/건강, 식품, 패션잡화, 패션의류, 가구/인테리어
+
+
 host = "49.50.173.55"
 port = 27017
 database = "naver_shopping"
@@ -26,10 +29,9 @@ smart_store_mall_sample = pd.DataFrame(eval(query))
 
 #%% 판매상품이 50개 이하 / ["생활/건강", "식품", "패션잡화", "패션의류", "가구/인테리어"]
 
-#smart_store_mall_sample = smart_store_mall_sample[['channel_id', 'mallName', 'prodCnt', 'mallGrade', 'keepCnt', 'repCatNm', 'businessType', 'identity', 'declaredToOnlineMarkettingNumber', 'businessAddressInfo.fullAddressInfo', 'businessAddressInfo.latitude', 'businessAddressInfo.longitude', 'storeExposureInfo.exposureInfo.NAVERBLOG.0', 'storeExposureInfo.exposureInfo.INSTAGRAM.0', 'storeExposureInfo.exposureInfo.FACEBOOK.0']]
-smart_store_mall_sample.dropna(subset=['channel_id', 'identity'], inplace=True)
-smart_store_mall_sample["channel_id"] = smart_store_mall_sample["channel_id"].astype(int).astype(str)
 smart_store_mall_sample_BPOWER_premium = utility_work.get_isin(smart_store_mall_sample, "mallGrade", ["BPOWER", "PREMIUM"])
+#smart_store_mall_sample.dropna(subset=['channel_id', 'identity'], inplace=True)
+smart_store_mall_sample["channel_id"] = smart_store_mall_sample["channel_id"].astype(int).astype(str)
 # smart_store_mall_sample_premium_5000 = utility_work.get_like(smart_store_mall_sample_premium, "channel_id", "5000")
 
 smart_store_mall_sample_BPOWER_premium["repCatNm"].value_counts()
